@@ -28,7 +28,7 @@ app = FastAPI(title="Smart Credit Cabinet — Mock Scoring", version="0.1", life
 
 
 class Application(BaseModel):
-    inn: str = Field(pattern=r"^\d{10}$")
+    inn: str = Field(pattern=r"^\d{10,12}$")
     amount: float = Field(gt=0)
     term_months: int = Field(default=12, ge=1, le=60)
     purpose: Literal["working_capital", "investment", "refinance"] = "working_capital"
@@ -65,8 +65,8 @@ def health():
 
 @app.get("/v1/enrichment/{inn}")
 def enrichment(inn: str):
-    if len(inn) != 10 or not inn.isdigit():
-        raise HTTPException(400, "ИНН юрлица — 10 цифр")
+    if not inn.isdigit() or len(inn) not in (10, 12):
+        raise HTTPException(400, "ИНН должен содержать 10 цифр (для юрлиц) или 12 цифр (для ИП/физлиц)")
     return enrich(inn)
 
 
