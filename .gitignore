@@ -1,0 +1,56 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+ENV/
+*.egg-info/
+dist/
+build/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Модели и данные (НЕ пушим на GitHub — они слишком большие)
+models/Qwen2.5-3B-Instruct/
+models/Qwen2.5-0.5B-Instruct/
+models/*.cfm
+models/*.bin
+models/*.safetensors
+*.pt
+*.pth
+*.onnx
+
+# Оставляем только метрики и конфиги моделей
+!models/metrics.json
+!models/features.json
+
+# Логи и временные файлы
+*.log
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Данные
+data/
+*.csv
+*.xlsx
+!data/sample_*.csv
+
+# OS
+.DS_Store
+Thumbs.db
