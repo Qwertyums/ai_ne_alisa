@@ -1,3 +1,9 @@
+# Пороги PD подобраны под модель, обученную на данных малого и микробизнеса (дефолтов ~7 %):
+# на отложенной выборке ~79 % одобрений, ~14 % ручной проверки, ~7 % отказов.
+PD_REVIEW = 0.10
+PD_REJECT = 0.25
+
+
 def hard_rules(data: dict, f: dict) -> list[dict]:
     rules = [
         ("BLOCKED_ACCOUNT", data["fns"]["account_blocked"],
@@ -18,9 +24,9 @@ def decide(data: dict, f: dict, score: dict, amount: float) -> dict:
 
     if rules:
         decision = "REJECT"
-    elif pd > 0.35:
+    elif pd > PD_REJECT:
         decision = "REJECT"
-    elif pd > 0.15:
+    elif pd > PD_REVIEW:
         decision = "REVIEW"
     else:
         decision = "APPROVE"
@@ -40,7 +46,7 @@ def decide(data: dict, f: dict, score: dict, amount: float) -> dict:
 
     reasons = [r["message"] for r in rules]
     if not rules and decision == "REJECT":
-        reasons.append(f"Модель оценила вероятность дефолта в {pd:.1%} — выше допустимого порога 35%.")
+        reasons.append(f"Модель оценила вероятность дефолта в {pd:.1%} — выше допустимого порога {PD_REJECT:.0%}.")
     if not rules and decision == "REVIEW":
         reasons.append("Требуется ручная проверка: риск на границе допустимого.")
 
