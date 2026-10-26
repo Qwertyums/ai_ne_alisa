@@ -22,9 +22,7 @@ build/
 .ipynb_checkpoints
 
 # Модели и данные (НЕ пушим на GitHub — они слишком большие)
-models/Qwen2.5-3B-Instruct/
 models/Qwen2.5-0.5B-Instruct/
-models/*.cfm
 models/*.bin
 models/*.safetensors
 *.pt
